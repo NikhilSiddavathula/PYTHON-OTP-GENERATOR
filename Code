@@ -1,0 +1,50 @@
+import random
+import time
+
+# Function to generate a 6-digit random OTP
+def generate_otp():
+    otp = random.randint(100000, 999999)
+    return str(otp)  # Return as string for easy comparison
+
+# Function to simulate sending OTP to user's email
+def send_otp_email(otp, email):
+    print("\n📨 Simulating sending email...")
+    time.sleep(1)
+    print(f"An OTP has been sent to your email: {email}")
+    print(f"[Debug: OTP is {otp}]")  # This is just for testing. In real use, this line should be removed.
+
+# Function to ask user to enter the OTP
+def get_user_input():
+    return input("Please enter the OTP you received: ").strip()
+
+# Function to check if the entered OTP matches the original
+def verify_otp(original_otp, entered_otp):
+    return original_otp == entered_otp
+
+# Main function to run the OTP verification process
+def otp_verification():
+    print("🔐 Welcome to OTP Verification System\n")
+
+    # Step 1: Ask for user's email
+    email = input("Enter your email address: ").strip()
+
+    # Step 2: Generate and "send" OTP
+    otp = generate_otp()
+    send_otp_email(otp, email)
+
+    # Step 3: Allow user up to 3 attempts to enter correct OTP
+    max_attempts = 3
+    for attempt in range(max_attempts):
+        print(f"\nAttempt {attempt + 1} of {max_attempts}")
+        user_otp = get_user_input()
+
+        if verify_otp(otp, user_otp):
+            print("✅ OTP verified successfully. Access granted!")
+            break
+        else:
+            print("❌ Incorrect OTP. Please try again.")
+    else:
+        print("\n🚫 You have used all attempts. Access denied.")
+
+# Run the program
+otp_verification()
